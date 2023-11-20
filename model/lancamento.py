@@ -1,8 +1,8 @@
 from datetime import date
-from model.conta import Conta
+from model.TipoLancamento.tp_lancamento import TipoLancamento
 
 class Lancamento:
-    def __init__(self, valor:float, data_lancamento:date, data_liquidacao:date, conta:Conta, descricao:str = '', tp_lancamento:str=''):
+    def __init__(self, valor:float, data_lancamento:date, data_liquidacao:date, conta, tp_lancamento:TipoLancamento, descricao:str = ''):
         self._valor = valor
         self._data_lancamento = data_lancamento
         self._data_liquidacao = data_liquidacao
@@ -54,4 +54,9 @@ class Lancamento:
         self._tp_lancamento = tp_lancamento
     #endregion
     
+    def __str__(self) -> str:
+        return f"""
+- Data: {self.data_lancamento}
+- {self.tp_lancamento.upper()} ==> {self.valor}
+        """
  
