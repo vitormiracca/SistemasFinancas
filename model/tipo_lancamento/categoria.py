@@ -23,8 +23,11 @@ class Categoria:
         return self._tp_lancamento
     
     @classmethod
-    def listar_categorias(cls, tipo_lancamento):
-        return cls._categorias[tipo_lancamento]
+    def listar_categorias(cls, tipo_lancamento=None):
+        if (tipo_lancamento):
+            return cls._categorias[tipo_lancamento]
+        else:
+            return set.union(*cls._categorias.values())
 
     @classmethod
     def enum_tp_lancamento(cls):

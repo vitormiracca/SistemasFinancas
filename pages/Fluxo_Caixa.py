@@ -1,3 +1,6 @@
+# carregando as bibliotecas
+import streamlit as st
+
 from model.conta import Conta
 from model.tipo_lancamento.categoria import Categoria
 from model.tipo_lancamento.despesa import Despesa
@@ -30,4 +33,28 @@ Receita('2024-02-15', 1580, "Salário", nu_conta, "Salário dia 15")
 
 #endregion
 
-nu_conta.gera_extrato()
+st.set_page_config(page_title="Fluxo_Caixa", page_icon="📈")
+
+st.title('Inserir Lançamento')
+
+st.sidebar.success("Registre seus Lançamentos.")
+
+contas = Conta.listar_contas()
+
+with st.form(key='insert'):
+    input_tipo_lancamento = st.radio("Tipo de Lançamento", ["Receita", "Despesa", "Transferência"], horizontal=True)
+    tipo_lancamento = TipoLancamento.string_para_tipo_lancamento(input_tipo_lancamento)
+
+    # Dividir a tela em duas colunas
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        input_data_lancamento = st.date_input(label='Data do Lançamento', format="DD/MM/YYYY")
+        input_conta = st.selectbox(label='Conta Usada',
+                                    options=contas)
+    with col2:
+        input_valor_lancamento = st.number_input(label='Valor do Lançamento', step=0.01)
+        st.date_input(label="Data do Débito", format="DD/MM/YYYY", disabled=True, value=input_data_lancamento)
+
+    input_descricao = st.selectbox(label="Categoria Lançamento", options=Categoria.listar_categorias(tipo_lancamento))
+    input_descricao = st.text_input(label='Insira a descrição do Lançamento')
+    button_submit = st.form_submit_button('Enviar')

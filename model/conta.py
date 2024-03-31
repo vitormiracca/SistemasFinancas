@@ -1,8 +1,12 @@
 class Conta:
+
+    contas_existentes = []
+
     def __init__(self, conta_nome:str, tipo_conta:str):      #saldo:float=0
         self._conta_nome = conta_nome
         self._tipo_conta = tipo_conta
         self.lancamentos = []
+        self.contas_existentes.append(self)
 
 #region Getter e Setters
     @property
@@ -19,6 +23,10 @@ class Conta:
     def tipo_conta(self,tipo_conta:str):
         self._tipo_conta = tipo_conta
 #endregion
+        
+    @classmethod
+    def listar_contas(cls):
+        return [c.conta_nome for c in cls.contas_existentes]
 
     def adicionar_lancamento(self, lancamento):
         self.lancamentos.append(lancamento)
