@@ -1,22 +1,18 @@
 from datetime import date
-from model.TipoLancamento.tp_lancamento import TipoLancamento
+from model.conta import Conta
+from model.tipo_lancamento.tipo_lancamento import TipoLancamento
 
 class Lancamento:
-    def __init__(self, valor:float, data_lancamento:date, data_liquidacao:date, conta, tp_lancamento:TipoLancamento, descricao:str = ''):
-        self._valor = valor
+    def __init__(self, data_lancamento:date, tp_lancamento:TipoLancamento, valor:float, conta:Conta, descricao:str =''):
         self._data_lancamento = data_lancamento
-        self._data_liquidacao = data_liquidacao
-        self._conta = conta
-        self._descricao = descricao
         self._tp_lancamento = tp_lancamento
+        self._valor = valor
+        self._conta = conta
+        self._data_liquidacao = data_lancamento
+        self._descricao = descricao
+        self._conta.adicionar_lancamento(lancamento=self)
 
     #region Getter e Setter
-    @property
-    def valor(self):
-        return self._valor
-    @valor.setter
-    def valor(self, valor:float):
-        self._valor = valor
 
     @property
     def data_lancamento(self):
@@ -26,11 +22,18 @@ class Lancamento:
         self._data_lancamento = data_lancamento
 
     @property
-    def data_liquidacao(self):
-        return self._data_lancamento
-    @data_liquidacao.setter
-    def data_liquidacao(self, data_liquidacao):
-        self._data_liquidacao = data_liquidacao
+    def tp_lancamento(self):
+        return self._tp_lancamento
+    @tp_lancamento.setter
+    def tp_lancamento(self, tp_lancamento):
+        self._tp_lancamento = tp_lancamento
+
+    @property
+    def valor(self):
+        return self._valor
+    @valor.setter
+    def valor(self, valor:float):
+        self._valor = valor
 
     @property
     def conta(self):
@@ -40,18 +43,19 @@ class Lancamento:
         self._conta = conta
 
     @property
+    def data_liquidacao(self):
+        return self._data_lancamento
+    @data_liquidacao.setter
+    def data_liquidacao(self, data_liquidacao):
+        self._data_liquidacao = data_liquidacao
+
+    @property
     def descricao(self):
         return self._descricao
     @descricao.setter
     def descricao(self, descricao):
         self._descricao = descricao
 
-    @property
-    def tp_lancamento(self):
-        return self._tp_lancamento
-    @tp_lancamento.setter
-    def tp_lancamento(self, tp_lancamento):
-        self._tp_lancamento = tp_lancamento
     #endregion
     
     def __str__(self) -> str:

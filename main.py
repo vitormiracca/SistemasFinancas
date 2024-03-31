@@ -1,47 +1,33 @@
-from model.TipoLancamento.categoria import Categoria
-from model.TipoLancamento.tp_lancamento import TipoLancamento
 from model.conta import Conta
-from model.TipoLancamento.receita import Receita
-from model.TipoLancamento.despesa import Despesa
+from model.tipo_lancamento.categoria import Categoria
+from model.tipo_lancamento.despesa import Despesa
+from model.tipo_lancamento.receita import Receita
+from model.tipo_lancamento.tipo_lancamento import TipoLancamento
+
+#region Preparando ambiente para teste
 
 # Adiciona categorias
 categoria_receita = ['Salário', 'Benefícios', 'Outros', 'Devedores', 'Rendimentos']
-categoria_despesa = ['Supermercado', 'Alimentação', 'Shopping', 'Estudo', 'Assinaturas Digitais', 'Tabacaria', 'Outros']
-
+categoria_despesa = ['Supermercado', 'Alimentação', 'Shopping', 'Estudo', 'Assinaturas Digitais', 'Tabacaria', 'Outros', 'Despesas Carro']
 for i in categoria_receita:
     Categoria(TipoLancamento.RECEITA, i)
 for i in categoria_despesa:
     Categoria(TipoLancamento.DESPESA, i)
 
-# Lista as categorias para cada tipo de lançamento
-enum_tipo_lancamento = Categoria.enum_tp_lancamento()
-for tipo in enum_tipo_lancamento:
-    print(f"Categorias para {tipo.name}: {Categoria.listar_categorias(tipo)}")
-    print()
+nu_conta = Conta("Nubank", "Conta Corrente")
+nu_credito = Conta("Nubank Crédito", "Crédito")
+bradesco_credito = Conta("Bradesco Cartões", "Crédito")
+ticket_vale = Conta("Ticket", "Vale Refeição")
 
+Receita('2024-02-01', 1959.10, "Salário", nu_conta, "Salário dia 01")
+Receita('2024-02-01', 750, "Benefícios", ticket_vale, "VR dia 01")
+Despesa('2024-02-01', 55.5, "Alimentação", ticket_vale, "Mc Donalds")
+Despesa('2024-02-01', 198.90, "Estudo", bradesco_credito, "Workshop Databricks")
+Despesa('2024-02-01', 49, "Tabacaria", nu_conta, "")
+Despesa('2024-02-01', 250, "Despesas Carro", bradesco_credito, "Gasolina")
+Despesa('2024-02-01', 750, "Supermercado", ticket_vale, "NT")
+Receita('2024-02-15', 1580, "Salário", nu_conta, "Salário dia 15")
 
-# Criar contas 
-conta_nu = Conta('Nubank', 2500)
-conta_bra = Conta('Bradesco', 15.50)
-conta_ticket = Conta('Ticket', 10.60)
+#endregion
 
-# Criar lançamentos
-receita1 = Receita(2850.50, '2023-11-01', '2023-11-01', conta_nu, 'Salário')
-receita2 = Receita(1500, '2023-11-15', '2023-11-15', conta_nu, 'Salário')
-receita3 = Receita(650.45, '2023-11-01', '2023-11-01', conta_ticket, 'Benefícios')
-
-despesa1 = Despesa(170, '2023-11-10', '2023-11-10', conta_nu, 'Shopping')
-despesa2 = Despesa(47.99, '2023-11-10', '2023-11-10', conta_ticket, 'Alimentação')
-despesa3 = Despesa(17, '2023-11-10', '2023-11-10', conta_ticket, 'Supermercado')
-despesa4 = Despesa(32.20, '2023-11-10', '2023-11-10', conta_nu, 'Tabacaria')
-despesa5 = Despesa(41, '2023-11-10', '2023-11-10', conta_nu, 'Estudo')
-
-
-# Realizar os lançamentos nas contas
-conta_nu.adicionar_lancamentos([receita1, receita2, despesa5, despesa4, despesa1])
-conta_ticket.adicionar_lancamentos([receita3, despesa2, despesa3])
-
-conta_nu.gera_extrato()
-print()
-print()
-conta_ticket.gera_extrato()
+nu_conta.gera_extrato()
