@@ -9,6 +9,7 @@ class Categoria:
     _categorias = {
         TipoLancamento.RECEITA : set(),
         TipoLancamento.DESPESA : set(),
+        TipoLancamento.TRANSFERENCIA : set(),
     }
 
     @property

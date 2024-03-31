@@ -2,10 +2,14 @@ class Conta:
 
     contas_existentes = []
 
-    def __init__(self, conta_nome:str, tipo_conta:str):      #saldo:float=0
+    def __init__(self, conta_nome:str, tipo_conta:str, saldo = None, data_vcto = 0, data_fechamento = 0):
         self._conta_nome = conta_nome
         self._tipo_conta = tipo_conta
+        self._saldo = saldo
+        self._data_vcto = data_vcto
+        self._data_vcto = data_fechamento
         self.lancamentos = []
+        
         self.contas_existentes.append(self)
 
 #region Getter e Setters
