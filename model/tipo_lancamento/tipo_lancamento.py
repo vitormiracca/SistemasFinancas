@@ -22,3 +22,12 @@ class TipoLancamento(Enum):
             TipoLancamento.TRANSFERENCIA: "Transferência"
         }
         return mapeamento[tipo_lancamento]
+    
+    @classmethod
+    def listar_tipos(cls):
+        return list(cls)
+    
+    @classmethod
+    def listar_tipos_str(cls):
+        tipos = [cls.tipo_lancamento_para_string(i) for i in cls.listar_tipos()]
+        return tipos

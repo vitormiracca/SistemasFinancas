@@ -1,15 +1,12 @@
-from dotenv import load_dotenv
-import os
 import psycopg2
 
-class ConexaoBanco:
-    def __init__(self):
-        load_dotenv()  
-        self.host = os.getenv("POSTGRE_HOST")
-        self.port = os.getenv("POSTGRE_PORT")
-        self.database = os.getenv("POSTGRE_DBNAME")
-        self.user = os.getenv("POSTGRE_USER")
-        self.password = os.getenv("POSTGRE_PASSWORD")
+class PostgreConnector:
+    def __init__(self, host, port, database, user, password): 
+        self.host = host
+        self.port = port
+        self.database = database
+        self.user = user
+        self.password = password
         self.conn = None
         self.cursor = None
 
@@ -32,3 +29,9 @@ class ConexaoBanco:
             self.cursor.close()
             self.conn.close()
             print("Conexão ao banco de dados fechada.")
+
+    def __enter__(self):
+        self.conectar()
+    
+    def __exit__(self):
+        self.fechar_conexao()

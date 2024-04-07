@@ -23,6 +23,10 @@ class Categoria:
     def tp_lancamento(self):
         return self._tp_lancamento
     
+    @property
+    def tipo_lancamento(self):
+        return TipoLancamento.tipo_lancamento_para_string(self._tp_lancamento)
+    
     @classmethod
     def listar_categorias(cls, tipo_lancamento=None):
         if (tipo_lancamento):

@@ -10,48 +10,46 @@ user = os.getenv('POSTGRE_USER')
 password = os.getenv('POSTGRE_PASSWORD')
 databse = os.getenv('POSTGRE_DBNAME')
 
-class ContaDAO:
+class CategoriaDAO:
     def __init__(self):
         self.conexao = PostgreConnector(host=host, port=port, database=databse, user=user, password=password)
 
-    # Implemente métodos para atualizar, excluir e consultar contas
-        
-    def criar_conta(self, conta):
+    def criar_categoria(self, categoria):
         self.conexao.conectar()
 
         try:
-            query = "INSERT INTO contas (nome, tipo_conta) VALUES (%s, %s);"
-            self.conexao.cursor.execute(query, (conta.conta_nome, conta.tipo_conta))
+            query = "INSERT INTO categorias (tipo_lancamento, nome) VALUES (%s, %s);"
+            self.conexao.cursor.execute(query, (categoria.tipo_lancamento, categoria.nome))
             # Commit para confirmar a transação no banco de dados
             self.conexao.conn.commit()
-            print("Conta criada com sucesso!")
+            print("Categoria criada com sucesso!")
         except Exception as e:
             # Em caso de erro, fazer rollback para desfazer a transação
             self.conexao.conn.rollback()
-            print("Erro ao criar conta:", e)
+            print("Erro ao criar categoria:", e)
         finally:
             # Fechar a conexão após o uso
             self.conexao.fechar_conexao()
 
-    def atualizar_conta(self, conta):
+    def atualizar_conta(self, categoria):
         self.conexao.conectar()
 
         try:
-            query = "UPDATE contas SET nome = %s, tipo = %s WHERE id_conta = %s;"
-            self.conexao.cursor.execute(query, (conta.nome, conta.tipo, conta.id_conta))
+            query = "UPDATE categorias SET nome = %s, tipo_lancamento = %s WHERE id = %s;"
+            self.conexao.cursor.execute(query, (categoria.nome, categoria.tipo_lancamento, categoria.id_categoria))
             self.conexao.conn.commit()
-            print("Conta atualizada com sucesso!")
+            print("Categoria atualizada com sucesso!")
         except Exception as e:
             self.conexao.conn.rollback()
-            print("Erro ao atualizar conta:", e)
+            print("Erro ao atualizar Categoria:", e)
         finally:
             self.conexao.fechar_conexao()
 
-    def deletar_conta(self, id_conta):
+    def deletar_conta(self, id_categoria):
         self.conexao.conectar()
         try:
-            query = "DELETE FROM contas WHERE id_conta = %s;"
-            self.conexao.cursor.execute(query, (id_conta,))
+            query = "DELETE FROM categorias WHERE id_categoria = %s;"
+            self.conexao.cursor.execute(query, (id_categoria,))
             self.conexao.conn.commit()
             print("Conta deletada com sucesso!")
         except Exception as e:
@@ -63,7 +61,7 @@ class ContaDAO:
     def listar_contas(self):
         self.conexao.conectar()
         try:
-            query = "SELECT * FROM contas;"
+            query = "SELECT * FROM categorias;"
             self.conexao.cursor.execute(query)
             rows = self.conexao.cursor.fetchall()
             col_names = [desc[0] for desc in self.conexao.cursor.description]
