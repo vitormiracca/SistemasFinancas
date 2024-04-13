@@ -1,23 +1,32 @@
 import psycopg2
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+host = os.getenv('POSTGRE_HOST')
+port = os.getenv('POSTGRE_PORT')
+user = os.getenv('POSTGRE_USER')
+password = os.getenv('POSTGRE_PASSWORD')
+database = os.getenv('POSTGRE_DBNAME')
 
 class PostgreConnector:
-    def __init__(self, host, port, database, user, password): 
-        self.host = host
-        self.port = port
-        self.database = database
-        self.user = user
-        self.password = password
+    def __init__(self): 
+        self._host = host
+        self._port = port
+        self._database = database
+        self._user = user
+        self._password = password
         self.conn = None
         self.cursor = None
 
     def conectar(self):
         try:
             self.conn = psycopg2.connect(
-                host=self.host,
-                port=self.port,
-                database=self.database,
-                user=self.user,
-                password=self.password
+                host=self._host,
+                port=self._port,
+                database=self._database,
+                user=self._user,
+                password=self._password
             )
             self.cursor = self.conn.cursor()
             print("Conexão ao banco de dados estabelecida com sucesso!")

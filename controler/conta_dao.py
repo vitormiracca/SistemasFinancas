@@ -3,16 +3,9 @@ from dotenv import load_dotenv
 import pandas as pd
 from controler.conexao_banco import PostgreConnector
 
-load_dotenv()
-host = os.getenv('POSTGRE_HOST')
-port = os.getenv('POSTGRE_PORT')
-user = os.getenv('POSTGRE_USER')
-password = os.getenv('POSTGRE_PASSWORD')
-databse = os.getenv('POSTGRE_DBNAME')
-
 class ContaDAO:
     def __init__(self):
-        self.conexao = PostgreConnector(host=host, port=port, database=databse, user=user, password=password)
+        self.conexao = PostgreConnector()
 
     # Implemente métodos para atualizar, excluir e consultar contas
         
@@ -20,8 +13,8 @@ class ContaDAO:
         self.conexao.conectar()
 
         try:
-            query = "INSERT INTO contas (nome, tipo_conta) VALUES (%s, %s);"
-            self.conexao.cursor.execute(query, (conta.conta_nome, conta.tipo_conta))
+            query = "INSERT INTO contas (nome, tipo_conta, dia_vcto, dia_fechamento) VALUES (%s, %s, %s, %s);"
+            self.conexao.cursor.execute(query, (conta.conta_nome, conta.tipo_conta, conta.dia_vcto, conta.dia_fechamento))
             # Commit para confirmar a transação no banco de dados
             self.conexao.conn.commit()
             print("Conta criada com sucesso!")
@@ -37,8 +30,8 @@ class ContaDAO:
         self.conexao.conectar()
 
         try:
-            query = "UPDATE contas SET nome = %s, tipo = %s WHERE id_conta = %s;"
-            self.conexao.cursor.execute(query, (conta.nome, conta.tipo, conta.id_conta))
+            query = "UPDATE contas SET nome = %s, tipo_conta = %s, dia_vcto = %s, dia_fechamento = %s  WHERE id_conta = %s;"
+            self.conexao.cursor.execute(query, (conta.nome, conta.tipo_conta, conta.dia_vcto, conta.dia_fechamento, conta.id_conta))
             self.conexao.conn.commit()
             print("Conta atualizada com sucesso!")
         except Exception as e:
@@ -66,9 +59,7 @@ class ContaDAO:
             query = "SELECT * FROM contas;"
             self.conexao.cursor.execute(query)
             rows = self.conexao.cursor.fetchall()
-            col_names = [desc[0] for desc in self.conexao.cursor.description]
-            df = pd.DataFrame(rows, columns=col_names)
-            return df
+            return rows
 
         except Exception as e:
             print("Erro ao listar contas:", e)
