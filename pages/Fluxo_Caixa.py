@@ -11,6 +11,8 @@ from model.tipo_lancamento.receita import Receita
 from model.tipo_lancamento.tipo_lancamento import TipoLancamento
 
 #region Preparando ambiente para teste
+lancamento_dao = LancamentoDAO()
+
 contas = Conta.listar_contas()
 tipos_lancamentos_str = TipoLancamento.listar_tipos_str()
 
@@ -48,4 +50,7 @@ if button_submit:
         descricao=input_descricao,
         categoria=input_categoria_lancamento
         )
-    LancamentoDAO().criar_lancamento(lancamento)
+    lancamento_dao.criar_lancamento(lancamento)
+
+df_lancamentos = lancamento_dao.listar_lancamentos()
+st.dataframe(df_lancamentos.sort_values(by='data_lancamento', ascending=False))

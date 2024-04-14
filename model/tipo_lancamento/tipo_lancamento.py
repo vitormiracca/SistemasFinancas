@@ -11,7 +11,7 @@ class TipoLancamento(Enum):
         mapeamento = {
             "Receita": TipoLancamento.RECEITA,
             "Despesa": TipoLancamento.DESPESA,
-            "Transferência": TipoLancamento.TRANSFERENCIA
+            "Transferência Entre Contas": TipoLancamento.TRANSFERENCIA
         }
         return mapeamento[string]
 
@@ -19,7 +19,7 @@ class TipoLancamento(Enum):
         mapeamento = {
             TipoLancamento.RECEITA: "Receita",
             TipoLancamento.DESPESA: "Despesa",
-            TipoLancamento.TRANSFERENCIA: "Transferência"
+            TipoLancamento.TRANSFERENCIA: "Transferência Entre Contas"
         }
         return mapeamento[tipo_lancamento]
     

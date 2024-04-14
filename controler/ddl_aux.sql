@@ -4,16 +4,17 @@ CREATE DATABASE my_cash_flow;
 CREATE TABLE lancamentos (
     id SERIAL PRIMARY KEY,
     data_lancamento DATE NOT NULL,
-    tipo_lancamento VARCHAR(20) NOT NULL,
+    tipo_lancamento VARCHAR(60) NOT NULL,
     valor DECIMAL(10,2) NOT NULL,
     descricao TEXT,
     conta_id INTEGER REFERENCES contas(id)
+    categoria_id INTEGER REFERENCES categorias(id)
 );
 
 -- Tabela de Categorias
 CREATE TABLE categorias (
     id SERIAL PRIMARY KEY,
-    tipo_lancamento VARCHAR(20) NOT NULL,
+    tipo_lancamento VARCHAR(60) NOT NULL,
     nome VARCHAR(100) NOT NULL
 );
 
