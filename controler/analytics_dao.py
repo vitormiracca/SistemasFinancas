@@ -15,6 +15,7 @@ class AnalyticsDAO:
                     l.valor,
                     co.nome                 as conta, 
                     co.tipo_conta,
+                    ca.nome                 as categoria,
                     co.dia_vcto,
                     co.dia_fechamento,
                     ca.nome,

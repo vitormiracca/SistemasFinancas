@@ -1,3 +1,4 @@
+from controler.analytics_dao import AnalyticsDAO
 from controler.conta_dao import ContaDAO
 from controler.categoria_dao import CategoriaDAO
 from controler.lancamento_dao import LancamentoDAO
@@ -10,6 +11,9 @@ from model.tipo_lancamento.tipo_lancamento import TipoLancamento
 lancamento_dao = LancamentoDAO()
 conta_dao = ContaDAO()
 categoria_dao = CategoriaDAO()
+analytics_dao = AnalyticsDAO()
+
+print(analytics_dao.df_lancamentos())
 
 # categorias_dict = {
 #     TipoLancamento.RECEITA: ['Salário', 'Benefícios', 'Outros', 'Devedores', 'Rendimentos'],
@@ -47,5 +51,5 @@ categoria_dao = CategoriaDAO()
 # for i in categorias:
 #     print(i.nome)
 
-for i in Conta.listar_contas():
-    print(i.conta_id)
+# for i in Conta.listar_contas():
+#     print(i.conta_id)

@@ -1,6 +1,7 @@
 # carregando as bibliotecas
 import streamlit as st
 
+from controler.analytics_dao import AnalyticsDAO
 from controler.lancamento_dao import LancamentoDAO
 from model import lancamento
 from model.conta import Conta
@@ -15,6 +16,8 @@ lancamento_dao = LancamentoDAO()
 
 contas = Conta.listar_contas()
 tipos_lancamentos_str = TipoLancamento.listar_tipos_str()
+analytics_dao = AnalyticsDAO()
+df = analytics_dao.df_lancamentos() #.sort_values('index', ascending=False)
 
 #endregion
 
@@ -52,5 +55,4 @@ if button_submit:
         )
     lancamento_dao.criar_lancamento(lancamento)
 
-df_lancamentos = lancamento_dao.listar_lancamentos()
-st.dataframe(df_lancamentos.sort_values(by='data_lancamento', ascending=False))
+st.dataframe(df)
